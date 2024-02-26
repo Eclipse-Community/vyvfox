@@ -9,6 +9,7 @@ const lazy = {};
 
 ChromeUtils.defineESModuleGetters(lazy, {
   NimbusFeatures: "resource://nimbus/ExperimentAPI.sys.mjs",
+  WindowsRegistry: "resource://gre/modules/WindowsRegistry.sys.mjs",
 });
 
 XPCOMUtils.defineLazyServiceGetter(
@@ -60,6 +61,26 @@ let ShellServiceInternal = {
     return false;
   },
 
+  isDefaultBrowserOptOut() {
+    if (AppConstants.platform == "win") {
+      let optOutValue = lazy.WindowsRegistry.readRegKey(
+        Ci.nsIWindowsRegKey.ROOT_KEY_CURRENT_USER,
+        "Software\\Mozilla\\Firefox",
+        "DefaultBrowserOptOut"
+      );
+      lazy.WindowsRegistry.removeRegKey(
+        Ci.nsIWindowsRegKey.ROOT_KEY_CURRENT_USER,
+        "Software\\Mozilla\\Firefox",
+        "DefaultBrowserOptOut"
+      );
+      if (optOutValue == "True") {
+        Services.prefs.setBoolPref("browser.shell.checkDefaultBrowser", false);
+        return true;
+      }
+    }
+    return false;
+  },
+
   /**
    * Used to determine whether or not to show a "Set Default Browser"
    * query dialog. This attribute is true if the application is starting
@@ -75,6 +96,10 @@ let ShellServiceInternal = {
     }
 
     if (!Services.prefs.getBoolPref("browser.shell.checkDefaultBrowser")) {
+      return false;
+    }
+
+    if (this.isDefaultBrowserOptOut()) {
       return false;
     }
 
@@ -318,7 +343,7 @@ let ShellServiceInternal = {
   async setDefaultBrowser(forAllUsers) {
     // On Windows, our best chance is to set UserChoice, so try that first.
     if (
-      AppConstants.platform == "win" &&
+      AppConstants.isPlatformAndVersionAtLeast("win", "10") &&
       lazy.NimbusFeatures.shellService.getVariable(
         "setDefaultBrowserUserChoice"
       )
@@ -364,7 +389,7 @@ let ShellServiceInternal = {
       return;
     }
 
-    if (AppConstants.platform == "win") {
+    if (AppConstants.isPlatformAndVersionAtLeast("win", "10")) {
       this.setAsDefaultPDFHandlerUserChoice();
     }
   },
