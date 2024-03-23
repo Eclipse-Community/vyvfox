@@ -571,7 +571,6 @@ class Longhand(Property):
                 "LineBreak",
                 "LineClamp",
                 "MasonryAutoFlow",
-                "ui::MozTheme",
                 "BoolInteger",
                 "text::MozControlCharacterVisibility",
                 "MathDepth",
