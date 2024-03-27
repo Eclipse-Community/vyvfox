@@ -496,6 +496,12 @@ mozilla::Maybe<nsUXThemeClass> nsNativeThemeWin::GetThemeClass(
       return Some(eUXEdit);
     case StyleAppearance::Toolbox:
       return Some(eUXRebar);
+    case StyleAppearance::MozWinMediaToolbox:
+      return Some(eUXMediaRebar);
+    case StyleAppearance::MozWinCommunicationsToolbox:
+      return Some(eUXCommunicationsRebar);
+    case StyleAppearance::MozWinBrowsertabbarToolbox:
+      return Some(eUXBrowserTabBarRebar);
     case StyleAppearance::Toolbar:
     case StyleAppearance::Toolbarbutton:
     case StyleAppearance::Separator:
@@ -785,7 +791,10 @@ nsresult nsNativeThemeWin::GetThemePartAndState(nsIFrame* aFrame,
       }
       return NS_OK;
     }
-    case StyleAppearance::Toolbox: {
+    case StyleAppearance::Toolbox:
+    case StyleAppearance::MozWinMediaToolbox:
+    case StyleAppearance::MozWinCommunicationsToolbox:
+    case StyleAppearance::MozWinBrowsertabbarToolbox: {
       aState = 0;
       aPart = RP_BACKGROUND;
       return NS_OK;
@@ -1234,6 +1243,9 @@ LayoutDeviceIntMargin nsNativeThemeWin::GetWidgetBorder(
 
   if (!WidgetIsContainer(aAppearance) ||
       aAppearance == StyleAppearance::Toolbox ||
+      aAppearance == StyleAppearance::MozWinMediaToolbox ||
+      aAppearance == StyleAppearance::MozWinCommunicationsToolbox ||
+      aAppearance == StyleAppearance::MozWinBrowsertabbarToolbox ||
       aAppearance == StyleAppearance::Tabpanel)
     return result;  // Don't worry about it.
 
@@ -1424,6 +1436,9 @@ LayoutDeviceIntSize nsNativeThemeWin::GetMinimumWidgetSize(
     case StyleAppearance::PasswordInput:
     case StyleAppearance::Textfield:
     case StyleAppearance::Toolbox:
+    case StyleAppearance::MozWinMediaToolbox:
+    case StyleAppearance::MozWinCommunicationsToolbox:
+    case StyleAppearance::MozWinBrowsertabbarToolbox:
     case StyleAppearance::Toolbar:
     case StyleAppearance::Progresschunk:
     case StyleAppearance::Tabpanels:
@@ -1503,6 +1518,9 @@ nsNativeThemeWin::WidgetStateChanged(nsIFrame* aFrame,
                                      const nsAttrValue* aOldValue) {
   // Some widget types just never change state.
   if (aAppearance == StyleAppearance::Toolbox ||
+      aAppearance == StyleAppearance::MozWinMediaToolbox ||
+      aAppearance == StyleAppearance::MozWinCommunicationsToolbox ||
+      aAppearance == StyleAppearance::MozWinBrowsertabbarToolbox ||
       aAppearance == StyleAppearance::Toolbar ||
       aAppearance == StyleAppearance::Progresschunk ||
       aAppearance == StyleAppearance::ProgressBar ||
