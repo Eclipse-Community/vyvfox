@@ -543,8 +543,8 @@ function _determineToolbarAndContentTheme(
     return kSystem;
   })();
 
-  Services.prefs.setIntPref("browser.theme.toolbar-theme", toolbarTheme);
-  Services.prefs.setIntPref("browser.theme.content-theme", contentTheme);
+  Services.prefs.setIntPref("browser.theme.toolbar-theme", 0);
+  Services.prefs.setIntPref("browser.theme.content-theme", 0);
 }
 
 /**

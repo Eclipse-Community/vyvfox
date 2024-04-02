@@ -1522,7 +1522,7 @@
 # theming code overrides it if appropriate.
 - name: browser.theme.toolbar-theme
   type: RelaxedAtomicUint32
-  value: 2
+  value: 0
   mirror: always
 
 # Communicates the preferred content theme color to platform (for e.g.,
@@ -1533,7 +1533,7 @@
 # Default to "toolbar", the theming code sets it appropriately.
 - name: browser.theme.content-theme
   type: RelaxedAtomicUint32
-  value: 2
+  value: 0
   mirror: always
   rust: true
 
