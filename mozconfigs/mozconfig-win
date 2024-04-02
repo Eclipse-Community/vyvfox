@@ -143,7 +143,7 @@ export RUSTFLAGS="-C target-feature=+sse3 -C codegen-units=1"
 #export CPPFLAGS="-O3 -march=x86-64-v3 /clang:-O3 /clang:-ffp-contract=fast /arch:AVX2"
 #export CXXFLAGS="-O3 -march=x86-64-v3 /clang:-O3 /clang:-ffp-contract=fast /arch:AVX2"
 #export LDFLAGS="-Wl,-O3 -march=x86-64-v3"
-#export RUSTFLAGS="-C target-feature=+avx2 -C codegen-units=1"
+#export RUSTFLAGS="-C target-cpu=haswell -C target-feature=+avx2 -C codegen-units=1 -Z tune-cpu=haswell"
 
 POLLY="-mllvm -polly -mllvm -polly-2nd-level-tiling -mllvm -polly-loopfusion-greedy -mllvm -polly-pattern-matching-based-opts -mllvm -polly-position=before-vectorizer -mllvm -polly-vectorizer=stripmine"
 export VERBOSE=1
