@@ -176,14 +176,14 @@ addressbar-suggest-firefox-suggest = Choose the type of suggestions that appear 
 # First Firefox Suggest checkbox main label and description. This checkbox
 # controls non-sponsored suggestions related to the user's search string.
 addressbar-firefox-suggest-nonsponsored =
-  .label = Suggestions from { -brand-short-name }
+  .label = Suggestions from Mozilla
 addressbar-firefox-suggest-nonsponsored-desc = Get suggestions from the web related to your search.
 
 # Second Firefox Suggest checkbox main label and description. This checkbox
 # controls sponsored suggestions related to the user's search string.
 addressbar-firefox-suggest-sponsored =
   .label = Suggestions from sponsors
-addressbar-firefox-suggest-sponsored-desc = Support { -brand-short-name } with occasional sponsored suggestions.
+addressbar-firefox-suggest-sponsored-desc = Support Mozilla with occasional sponsored suggestions.
 
 # An additional toggle button in the Firefox Suggest settings that controls
 # whether userdata-based suggestions like history and bookmarks should be
@@ -196,8 +196,8 @@ addressbar-firefox-suggest-private =
 # .description is transferred into a separate paragraph by the moz-toggle
 # custom element code.
 addressbar-firefox-suggest-data-collection =
-  .label = Improve the { -firefox-suggest-brand-name } experience
-  .description = Share search query data with { -vendor-short-name } to create a richer search experience.
+  .label = Mozilla wants more of your data
+  .description = Share search query data with Mozilla to create a richer search experience.
 
 # The "Learn more" link shown in the Firefox Suggest preferences UI.
 addressbar-locbar-firefox-suggest-learn-more = Learn more
