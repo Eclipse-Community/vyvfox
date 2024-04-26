@@ -231,3 +231,6 @@ neqo-http3 = { path = "third_party/rust/neqo-http3" }
 neqo-qpack = { path = "third_party/rust/neqo-qpack" }
 neqo-transport = { path = "third_party/rust/neqo-transport" }
 neqo-udp = { path = "third_party/rust/neqo-udp" }
+
+# add unmerged mime types
+mime_guess = { path = "third_party/rust/mime_guess" }
