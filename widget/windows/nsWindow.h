@@ -253,11 +253,14 @@ class nsWindow final : public nsBaseWidget {
   TextEventDispatcherListener* GetNativeTextEventDispatcherListener() override;
   void SetTransparencyMode(TransparencyMode aMode) override;
   TransparencyMode GetTransparencyMode() override;
+  void UpdateOpaqueRegion(const LayoutDeviceIntRegion& aOpaqueRegion) override;
   nsresult SetNonClientMargins(const LayoutDeviceIntMargin&) override;
   void SetResizeMargin(mozilla::LayoutDeviceIntCoord aResizeMargin) override;
   void UpdateWindowDraggingRegion(
       const LayoutDeviceIntRegion& aRegion) override;
 
+  void UpdateThemeGeometries(
+      const nsTArray<ThemeGeometry>& aThemeGeometries) override;
   uint32_t GetMaxTouchPoints() const override;
   void SetIsEarlyBlankWindow(bool) override;
 
@@ -517,9 +520,13 @@ class nsWindow final : public nsBaseWidget {
   bool CanTakeFocus();
   bool UpdateNonClientMargins(bool aReflowWindow = true);
   void UpdateDarkModeToolbar();
+  void UpdateGetWindowInfoCaptionStatus(bool aActiveCaption);
   void ResetLayout();
   void InvalidateNonClientRegion();
   HRGN ExcludeNonClientFromPaintRegion(HRGN aRegion);
+  bool HasGlass() const {
+    return mTransparencyMode == TransparencyMode::BorderlessGlass;
+  }
   HWND GetOwnerWnd() const { return ::GetWindow(mWnd, GW_OWNER); }
   bool IsOwnerForegroundWindow() const {
     HWND owner = GetOwnerWnd();
@@ -615,11 +622,9 @@ class nsWindow final : public nsBaseWidget {
   TransparencyMode GetWindowTranslucencyInner() const {
     return mTransparencyMode;
   }
+  void UpdateGlass();
   bool IsSimulatedClientArea(int32_t clientX, int32_t clientY);
   bool IsWindowButton(int32_t hitTestResult);
-
-  void UpdateOpaqueRegion(const LayoutDeviceIntRegion&) override;
-  void UpdateOpaqueRegionInternal();
 
   bool DispatchTouchEventFromWMPointer(UINT msg, LPARAM aLParam,
                                        const WinPointerInfo& aPointerInfo,
@@ -637,6 +642,11 @@ class nsWindow final : public nsBaseWidget {
   LayoutDeviceIntRegion GetRegionToPaint(bool aForceFullRepaint, PAINTSTRUCT ps,
                                          HDC aDC);
   nsIWidgetListener* GetPaintListener();
+
+  void AddWindowOverlayWebRenderCommands(
+      mozilla::layers::WebRenderBridgeChild* aWrBridge,
+      mozilla::wr::DisplayListBuilder& aBuilder,
+      mozilla::wr::IpcResourceUpdateQueue& aResourceUpdates) override;
 
   void CreateCompositor() override;
   void DestroyCompositor() override;
@@ -809,8 +819,6 @@ class nsWindow final : public nsBaseWidget {
 
   // Draggable titlebar region maintained by UpdateWindowDraggingRegion
   LayoutDeviceIntRegion mDraggableRegion;
-  // Opaque region maintained by UpdateOpaqueRegion
-  LayoutDeviceIntRegion mOpaqueRegion;
 
   // Graphics
   LayoutDeviceIntRect mLastPaintBounds;
@@ -819,6 +827,8 @@ class nsWindow final : public nsBaseWidget {
 
   // Transparency
   TransparencyMode mTransparencyMode = TransparencyMode::Opaque;
+  nsIntRegion mPossiblyTransparentRegion;
+  MARGINS mGlassMargins = {0, 0, 0, 0};
 
   // Win7 Gesture processing and management
   nsWinGesture mGesture;
@@ -846,6 +856,9 @@ class nsWindow final : public nsBaseWidget {
   // The point in time at which the last paint completed. We use this to avoid
   //  painting too rapidly in response to frequent input events.
   TimeStamp mLastPaintEndTime;
+
+  // The location of the window buttons in the window.
+  mozilla::Maybe<LayoutDeviceIntRect> mWindowButtonsRect;
 
   // Caching for hit test results (in client coordinates)
   LayoutDeviceIntPoint mCachedHitTestPoint;
