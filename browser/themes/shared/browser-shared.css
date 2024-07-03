@@ -71,6 +71,8 @@ body {
     --chrome-content-separator-color: var(--lwt-sidebar-border-color, light-dark(rgba(0,0,0,.3), rgba(255,255,255,.3)));
   }
 
+  --panel-separator-color: color-mix(in srgb, currentColor 25%, transparent);
+  --panel-shortcut-color: inherit;
   --tabs-navbar-separator-color: ThreeDShadow;
   --tabs-navbar-separator-style: solid;
 
@@ -156,6 +158,8 @@ body {
   }
 
   @media (prefers-contrast) {
+    --autocomplete-popup-separator-color: color-mix(in srgb, currentColor 86%, transparent);
+    --panel-separator-color: currentColor;
     --urlbar-icon-fill-opacity: 1;
   }
 
