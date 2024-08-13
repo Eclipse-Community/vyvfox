@@ -698,6 +698,7 @@ static bool IsCloaked(HWND hwnd) {
 
 nsWindow::nsWindow(bool aIsChildWindow)
     : nsBaseWidget(BorderStyle::Default),
+      mBrush(::CreateSolidBrush(NSRGB_2_COLOREF(::GetSysColor(COLOR_BTNFACE)))),
       mFrameState(std::in_place, this),
       mIsChildWindow(aIsChildWindow),
       mLastPaintEndTime(TimeStamp::Now()),
@@ -1275,16 +1276,6 @@ static void RegisterWindowClass(const wchar_t* aClassName, UINT aExtraStyle,
   wc.hIcon =
       aIconID ? ::LoadIconW(::GetModuleHandleW(nullptr), aIconID) : nullptr;
   wc.lpszClassName = aClassName;
-
-  // Since we discard WM_ERASEBKGND events, the window-class background brush is
-  // mostly not used -- it shows up when resizing, but scarcely ever otherwise.
-  //
-  // In theory we could listen for theme changes and set this brush to an
-  // appropriate background color as needed; but given the hoops Win32 makes us
-  // jump through to change class data, it's probably not worth the trouble.
-  // (See bug 1901875.) Instead, we just make it dark grey, which is probably
-  // acceptable in either light or dark mode.
-  wc.hbrBackground = (HBRUSH)::GetStockObject(DKGRAY_BRUSH);
 
   // Failures are ignored as they are handled when ::CreateWindow fails
   ::RegisterClassW(&wc);
@@ -2872,6 +2863,23 @@ HRGN nsWindow::ExcludeNonClientFromPaintRegion(HRGN aRegion) {
   CombineRgn(rgn, rgn, nonClientRgn, RGN_DIFF);
   DeleteObject(nonClientRgn);
   return rgn;
+}
+
+/**************************************************************
+ *
+ * SECTION: nsIWidget::SetBackgroundColor
+ *
+ * Sets the window background paint color.
+ *
+ **************************************************************/
+
+void nsWindow::SetBackgroundColor(const nscolor& aColor) {
+  if (mBrush) ::DeleteObject(mBrush);
+
+  mBrush = ::CreateSolidBrush(NSRGB_2_COLOREF(aColor));
+  if (mWnd != nullptr) {
+    ::SetClassLongPtrW(mWnd, GCLP_HBRBACKGROUND, (LONG_PTR)mBrush);
+  }
 }
 
 /**************************************************************
@@ -7272,6 +7280,12 @@ void nsWindow::OnDestroy() {
   }
 
   IMEHandler::OnDestroyWindow(this);
+
+  // Free GDI window class objects
+  if (mBrush) {
+    VERIFY(::DeleteObject(mBrush));
+    mBrush = nullptr;
+  }
 
   // Destroy any custom cursor resources.
   if (mCursor.IsCustom()) {
