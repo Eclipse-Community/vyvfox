@@ -1975,7 +1975,9 @@ static nsresult PinCurrentAppToTaskbarImpl(
         // with the Win 11 APIs.
         break;
     }
-  } else if (IsWin10OrLater()) {
+  }
+
+  if (IsWin10OrLater()) {
     return PinCurrentAppToTaskbarWin10(aCheckOnly, aAppUserModelId, shortcutPath);
   } else {
     return PinCurrentAppToTaskbarWin7(aCheckOnly, shortcutPath);
