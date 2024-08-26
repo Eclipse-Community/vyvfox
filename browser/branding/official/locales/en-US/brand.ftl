@@ -16,12 +16,12 @@
 ## For further details, consult:
 ## https://mozilla-l10n.github.io/styleguides/mozilla_general/#brands-copyright-and-trademark
 
--brand-shorter-name = r3dfox
--brand-short-name = r3dfox
--brand-shortcut-name = r3dfox
--brand-full-name = Eclipse r3dfox
+-brand-shorter-name = r3dfox ESR
+-brand-short-name = r3dfox ESR
+-brand-shortcut-name = r3dfox ESR
+-brand-full-name = Eclipse r3dfox ESR
 # This brand name can be used in messages where the product name needs to
 # remain unchanged across different versions (Nightly, Beta, etc.).
--brand-product-name = r3dfox
+-brand-product-name = r3dfox ESR
 -vendor-short-name = Eclipse Community
 trademarkInfo = { "r3dfox logos are copyrights of Eclipse Community." }

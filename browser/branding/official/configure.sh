@@ -2,11 +2,11 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-MOZ_APP_NAME=r3dfox
+MOZ_APP_NAME=r3dfox_esr
 
-MOZ_APP_BASENAME=r3dfox
+MOZ_APP_BASENAME="r3dfox ESR"
 
-MOZ_APP_DISPLAYNAME=r3dfox
+MOZ_APP_DISPLAYNAME="r3dfox ESR"
 
 MOZ_APP_UA_NAME=r3dfox
 
