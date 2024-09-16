@@ -35,7 +35,6 @@ export WIN32_REDIST_DIR="C:/VC++/x86"
 export WIN_UCRT_REDIST_DIR="C:/VC++/x86"
 
 # Optimization settings
-ac_add_options --disable-accessibility
 ac_add_options --disable-debug
 ac_add_options --disable-debug-js-modules
 ac_add_options --disable-debug-symbols
