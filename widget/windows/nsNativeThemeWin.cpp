@@ -2209,7 +2209,7 @@ bool nsNativeThemeWin::WidgetAttributeChangeRequiresRepaint(
       aAppearance == StyleAppearance::MozWindowButtonClose ||
       aAppearance == StyleAppearance::MozWindowButtonMinimize ||
       aAppearance == StyleAppearance::MozWindowButtonMaximize ||
-      aAppearance == StyleAppearance::MozWindowButtonRestore
+      aAppearance == StyleAppearance::MozWindowButtonRestore ||
       aAppearance == StyleAppearance::Menulist ||
       aAppearance == StyleAppearance::MenulistButton ||
       aAppearance == StyleAppearance::MozMenulistArrowButton) {
