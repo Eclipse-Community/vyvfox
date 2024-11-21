@@ -93,7 +93,7 @@ void nsLookAndFeel::RefreshImpl() {
 }
 
 static bool UseNonNativeMenuColors(ColorScheme aScheme) {
-  return !LookAndFeel::GetInt(LookAndFeel::IntID::UseAccessibilityTheme) ||
+  return LookAndFeel::GetInt(LookAndFeel::IntID::WindowsDefaultTheme) ||
          aScheme == ColorScheme::Dark;
 }
 
@@ -469,11 +469,11 @@ nsresult nsLookAndFeel::NativeGetInt(IntID aID, int32_t& aResult) {
     case IntID::TreeScrollLinesMax:
       aResult = 3;
       break;
-    case IntID::WindowsAccentColorInTitlebar:
-      aResult = mTitlebarColors.mUseAccent;
+    case IntID::WindowsDefaultTheme:
+      aResult = nsUXThemeData::IsDefaultWindowTheme();
       break;
-    case IntID::WindowsMica:
-      aResult = WinUtils::MicaEnabled();
+    case IntID::WindowsAccentColorInTitlebar: {
+      aResult = mTitlebarColors.mUseAccent;
       break;
     case IntID::AlertNotificationOrigin:
       aResult = 0;
@@ -837,12 +837,6 @@ auto nsLookAndFeel::ComputeTitlebarColors() -> TitlebarColors {
 
   result.mAccentInactive = dwmKey.GetValueAsDword(u"AccentColorInactive"_ns);
   result.mAccentInactiveText = GetAccentColorText(result.mAccentInactive);
-
-  if (WinUtils::MicaEnabled()) {
-    // Use transparent titlebar backgrounds when using mica.
-    result.mActiveDark.mBg = result.mActiveLight.mBg =
-        result.mInactiveDark.mBg = result.mInactiveLight.mBg = NS_TRANSPARENT;
-  }
 
   // The ColorPrevalence value is set to 1 when the "Show color on title bar"
   // setting in the Color section of Window's Personalization settings is
