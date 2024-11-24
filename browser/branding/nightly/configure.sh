@@ -8,7 +8,7 @@ MOZ_APP_BASENAME=Plasmafox
 
 MOZ_APP_DISPLAYNAME=Plasmafox
 
-MOZ_APP_UA_NAME=Plasmafox
+MOZ_APP_UA_NAME=r3dfox
 
 MOZ_APP_VENDOR="Eclipse Community"
 
