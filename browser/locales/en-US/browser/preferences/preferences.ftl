@@ -145,7 +145,7 @@ r3dfox-title = r3dfox configurations
 r3dfox-native-checkbox =
     .label = Use native styles
 
-r3dfox-native-checkbox-desc = This controls whether the scrollbar, checkboxes, and other elements use their native system counterparts or their non-native browser themed style. May requre browser restart.
+r3dfox-native-checkbox-desc = This controls whether the scrollbar, checkboxes, and other elements use their native system counterparts or their non-native browser themed style.
 
 r3dfox-native-scroll = Scrollbar style
 
@@ -219,6 +219,11 @@ r3dfox-one-offs =
     .label = Instant one off searches
 
 r3dfox-one-offs-desc = Enable for instant one off searches.
+
+r3dfox-modern =
+    .label = Modern UI (Requires browser restart)
+
+r3dfox-modern-desc = Enable for standard Firefox Windows 10 UI on all platforms.
 
 r3dfox-e10s =
     .label = (BETA) Disable e10s (multiprocess)
