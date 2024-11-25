@@ -78,7 +78,7 @@ Solinus - Branding visuals, icons and fancy text
 
 Tor Browser Developers - Addon fix code from Tor Browser
 
-UnityAI - General help with coding and the theme code
+Unity Pixelheart (UnityAI) - General help with coding and the theme code (Created by @GarryStraitYT)
 
 wanderer - Various code contributions for Vista support
 
