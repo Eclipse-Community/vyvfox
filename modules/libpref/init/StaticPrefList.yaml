@@ -917,7 +917,7 @@
 # Is support for Navigator.sendBeacon enabled?
 - name: beacon.enabled
   type: bool
-  value: false
+  value: true
   mirror: always
 
 #---------------------------------------------------------------------------
