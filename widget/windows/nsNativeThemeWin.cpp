@@ -2393,7 +2393,6 @@ LayoutDeviceIntSize nsNativeThemeWin::GetMinimumWidgetSize(
     }
     case StyleAppearance::MozWindowButtonMinimize: {
       SIZE sz = nsUXThemeData::GetCommandButtonMetrics(CMDBUTTONIDX_MINIMIZE);
-      LayoutDeviceIntSize result(sz.cx, sz.cy);
       if (!IsVistaOrLater()) {
         LayoutDeviceIntSize result(sz.cx - 4, sz.cy - 4);
         AddPaddingRect(&result, CAPTIONBUTTON_MINIMIZE);
@@ -2406,7 +2405,6 @@ LayoutDeviceIntSize nsNativeThemeWin::GetMinimumWidgetSize(
     }
     case StyleAppearance::MozWindowButtonClose: {
       SIZE sz = nsUXThemeData::GetCommandButtonMetrics(CMDBUTTONIDX_CLOSE);
-      LayoutDeviceIntSize result(sz.cx, sz.cy);
       if (!IsVistaOrLater()) {
         LayoutDeviceIntSize result(sz.cx - 4, sz.cy - 4);
         AddPaddingRect(&result, CAPTIONBUTTON_CLOSE);
